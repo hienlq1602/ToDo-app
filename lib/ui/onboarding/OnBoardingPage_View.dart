@@ -1,5 +1,6 @@
 // Class cha : Quan ly cac page con di chuyen qua lai giua cac page con
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todolist_app/ui/onboarding/OnBoarding_Child_Page.dart';
 import 'package:todolist_app/ui/welcome/welcome_page.dart';
 import 'package:todolist_app/until/enums/onBoarding_page_position.dart';
@@ -46,12 +47,14 @@ class _OnboardingpageViewState extends State<OnboardingpageView> {
            OnboardingChildPage(
                onboardingPagePosition: OnBoardingPagePosition.page3,
              nextOnPressed: (){
+               _markOnboarindCompleted();
                _goToWelcomePage();
              },
              backOnPressed: (){
                _pageController.jumpToPage(1);
              },
              skipOnPressed: (){
+               _markOnboarindCompleted();
                _goToWelcomePage();
              },
            ),
@@ -60,6 +63,14 @@ class _OnboardingpageViewState extends State<OnboardingpageView> {
     );
   }
   void _goToWelcomePage(){
-    Navigator.push(context, MaterialPageRoute(builder: (context) => WelcomePage()));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => WelcomePage(isFirstTimeInstallApp : true)));
+  }
+  Future<void> _markOnboarindCompleted() async{
+    try{
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      final result = prefs.setBool("kOnboardingCompleted",true);
+    }catch(e){
+      return ;
+    }
   }
 }

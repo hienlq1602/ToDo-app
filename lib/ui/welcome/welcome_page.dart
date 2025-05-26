@@ -1,22 +1,27 @@
 import 'package:flutter/material.dart';
 
 class WelcomePage extends StatelessWidget {
-  const WelcomePage({super.key});
+
+  const WelcomePage({super.key, required this.isFirstTimeInstallApp});
+  final bool isFirstTimeInstallApp;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        leading: IconButton(
+        leading: isFirstTimeInstallApp ? IconButton(
             onPressed: () {
+              if(Navigator.canPop(context)){
               Navigator.pop(context);
+              };
             },
             icon: Icon(
               Icons.arrow_back_ios_new_outlined,
               size: 18,
               color: Colors.white,
-            )),
+            ),
+        ) : null,
       ),
       backgroundColor: Color(0xFF121212),
       body: SafeArea(
