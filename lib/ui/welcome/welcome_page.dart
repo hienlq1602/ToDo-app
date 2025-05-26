@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class WelcomePage extends StatelessWidget {
@@ -29,6 +30,7 @@ class WelcomePage extends StatelessWidget {
           children: [
             _buildTitleAndDes(),
             const Spacer(),
+            _buildButtonChangeLanguage(context),
             _buildButtonLogin(),
             _buildButtonRegister()
           ],
@@ -44,7 +46,7 @@ class WelcomePage extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            "Welcome to Uptodo",
+            "welcome_title".tr(),
             style: TextStyle(
               fontSize: 32,
               fontFamily: "Lato",
@@ -56,7 +58,7 @@ class WelcomePage extends StatelessWidget {
             height: 26,
           ),
           Text(
-            "Please login to your account or create new account to continue",
+            "welcome_des".tr(),
             style: TextStyle(
               fontSize: 16,
               fontFamily: "Lato",
@@ -69,6 +71,35 @@ class WelcomePage extends StatelessWidget {
       ),
     );
   }
+
+
+  Widget _buildButtonChangeLanguage(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      height: 48,
+      padding: EdgeInsets.symmetric(horizontal: 24),
+      margin: EdgeInsets.only(bottom: 28),
+      child: ElevatedButton(
+          onPressed: () {
+            final currenrLocale = context.locale.toString();
+            if(currenrLocale == "en"){
+              context.setLocale( const Locale("vi"));
+            }else{
+              context.setLocale( const Locale("en"));
+            }
+          },
+          style: ElevatedButton.styleFrom(
+              backgroundColor: Color(0xFF8875FF),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(4),
+              )),
+          child: Text("Change Language",
+              style: TextStyle(
+                  fontSize: 16,
+                  fontFamily: "Lato",
+                  fontWeight: FontWeight.w400,
+                  color: Colors.white))),
+    );}
 
   Widget _buildButtonLogin() {
     return Container(
@@ -108,7 +139,7 @@ class WelcomePage extends StatelessWidget {
                 width: 1,
                 color: Color(0xFF8875FF),
               )),
-          child: Text("Login",
+          child: Text("SignUp",
               style: TextStyle(
                   fontSize: 16,
                   fontFamily: "Lato",
